@@ -477,18 +477,17 @@
         let selectedirradiationsTime = 0; // 訪問回数で選択された時間
 
         let menuTimes = {
-            '根元染め': 60,
-            '全体染め': 60,
-            '全体染め ロング': 60,
-            '部分根元染め': 60,
-            'コラーゲンカラー根元染め': 60,
-            'コラーゲンカラー全体染め': 60,
-            'コラーゲンカラー全体染め ロング': 60,
-            'プレックスカラー根元染め': 60,
-            'プレックスカラー全体染め': 60,
-            'プレックスカラー全体染め ロング': 60
+            '根元染め': 1,
+            '全体染め': 1,
+            '全体染め ロング': 1,
+            '部分根元染め': 1,
+            'コラーゲンカラー根元染め': 1,
+            'コラーゲンカラー全体染め': 1,
+            'コラーゲンカラー全体染め ロング': 1,
+            'プレックスカラー根元染め': 1,
+            'プレックスカラー全体染め': 1,
+            'プレックスカラー全体染め ロング': 1
         };
-
 
         let selectedMenuTime = 0;
 
@@ -529,8 +528,6 @@
         <p>${selectedSymptomText}</p>
         <hr>
         <p>${irradiationsText}</p>
-        <hr>
-        <p>${totalTimeText}</p>
         <hr>
         <p>${selectedDateText}</p>
         <hr>
@@ -862,15 +859,13 @@
             const table = calendar.querySelector('table tbody');
 
             const times = [
-                '09:00', '09:20', '09:30', '09:50',
-                '10:20', '10:40', '10:50', '11:20', '11:40',
-                '12:00', '12:20', '12:30',
-                '13:00', '13:20', '13:30',
-                '13:50', '14:20', '14:40', '14:50',
+                '09:00', '09:20',
+                '10:20', '10:40', '11:20', '11:40',
+                '12:00', '12:20',
+                '13:00', '13:20', '14:20', '14:40',
                 '15:20', '15:40',
                 '16:00', '16:20'
             ];
-
 
             if (table.rows.length === 0) {
                 for (const time of times) {
@@ -946,16 +941,13 @@
                         continue;
                     }
 
-// 30分後の時間を計算
-const nowPlus30 = new Date(now.getTime() + 30 * 60 * 1000);
-
-// ここで終了時間を使った条件処理を行う
-// リアルタイムで+30分後までの時間帯を×にする
-if (slotStart < nowPlus30) {
-    cell.textContent = '✕';
-    cell.classList.add('unavailable');
-    continue;
-}
+                    // ここで終了時間を使った条件処理を行う
+                    // 例えば、リアルタイムで既に過ぎた時間帯は×にする
+                    if (slotStart < now) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                        continue;
+                    }
 
                     const isBusinessDay = businessDays.some(businessDay => {
                         const businessDayStart = new Date(businessDay.start);
@@ -979,6 +971,11 @@ if (slotStart < nowPlus30) {
 
                     // 営業日のイベント時間内に他のイベントがある場合
                     if (isBusinessEventTime && count > 0) {
+                        cell.textContent = '✕';
+                        cell.classList.add('unavailable');
+                    }
+                    // 土曜日以外のすべての曜日で15時20分は利用不可
+                    else if (slotStart.getHours() === 15 && slotStart.getMinutes() === 20 && slotStart.getDay() !== 6) {
                         cell.textContent = '✕';
                         cell.classList.add('unavailable');
                     }
