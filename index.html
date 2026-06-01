@@ -841,6 +841,7 @@
     margin-right: 10px;
     cursor: pointer;
 }
+
     </style>
 </head>
 
@@ -854,7 +855,7 @@
     </div>
 
     <div class="container">
-        <h1>ヘアカラー専門ＭＩＮＴ<br>新琴似店<br>予約フォーム</h1>
+        <h1>ヘアカラー専門ＭＩＮＴ<br>石狩店<br>予約フォーム</h1>
         <div class="label">お客様名<span class="required">必須</span></div>
         <input type="text" id="name" placeholder="お名前を入力してください" oninput="saveInput('name')">
 
@@ -1070,7 +1071,7 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             liff.init({
-                liffId: '2001298999-Kv8a9oo5'
+                liffId: '2001302547-NXrj0kn9'
             }).then(() => {
                 console.log('LIFF初期化成功');
             }).catch((err) => {
@@ -1161,6 +1162,7 @@ if (savedGender) {
                 }
             });
         });
+
 
         function updateDisplayInfo() {
             const name = document.getElementById('name').value;
@@ -1340,12 +1342,6 @@ if (savedGender) {
                 treatmentText.innerHTML = `<div style="text-align: left;">❶塗布前に栄養補給<br>❷内部強化プレックスカラー<br>❸シャンプー後に処理&アルカリ除去<br>❹潤いUPケアトリートメント</div><div style="text-align: left; font-size:0.85em; color:#888;">※染める範囲は下のボタンからお選び下さい<br>※コラーゲンカラーに変更可</div>`;
             } else if (treatmentId === 'treatment12') {
                 treatmentText.innerHTML = `<div style="text-align: left;">メニューは現地にてお選びいただけます</div>`;
-            } else if (treatmentId === 'treatment13') {
-                treatmentText.innerHTML = `<div style="text-align: left;">料金：5280円(税込)</div>`;
-            } else if (treatmentId === 'treatment14') {
-                treatmentText.innerHTML = `<div style="text-align: left;">料金：5940円(税込)</div>`;
-            } else if (treatmentId === 'treatment15') {
-                treatmentText.innerHTML = `<div style="text-align: left;">料金：6600円(税込)</div>`;
             } else {
                 treatmentText.innerHTML = '';
             }
@@ -1582,7 +1578,7 @@ if (savedGender) {
                 return;
             }
 
-            const url = 'https://script.google.com/macros/s/AKfycbz2wZt7L1ZVfVfPQI-CqXMuucPXj2DJqrb_Qt0WFWlHMXEEytjvuwqyg9qzDxg4kO2ICA/exec' +
+            const url = 'https://script.google.com/macros/s/AKfycbzYLOJRlBGEWeafO0gz9pV705maVVr9hb0dY1LtjZzlnqebiTA8KGOwh47UDbqbenh6/exec' +
                 `?startTime=${startTime.toISOString()}&endTime=${endTime.toISOString()}`;
 
             try {
@@ -1652,11 +1648,8 @@ if (savedGender) {
                 }
             }
 
-
 // 現在の日時を取得
 const now = new Date();
-const limitDate = new Date();
-limitDate.setDate(now.getDate() + 30); // 今日から30日後
 
 // テーブルの内容を更新
 for (let i = 0; i < 7; i++) {
@@ -1685,7 +1678,7 @@ for (let i = 0; i < 7; i++) {
         slotStart.setHours(parseInt(times[j].split(':')[0]), parseInt(times[j].split(':')[1]), 0, 0);
 
         const slotEnd = new Date(slotStart);
-        let menuDuration = selectedMenuTime || 10;
+        let menuDuration = selectedMenuTime || 0;
         let visitDuration = selectedVisitTime || 0;
         let irradiationsDuration = selectedirradiationsTime || 0;
 
@@ -1699,22 +1692,16 @@ for (let i = 0; i < 7; i++) {
             continue;
         }
 
-        // 30日後以降は✕に設定
-        if (slotStart > limitDate) {
-            cell.textContent = '✕';
-            cell.classList.add('unavailable');
-            continue;
-        }
-
         // 20分後の時間を計算
         const nowPlus20 = new Date(now.getTime() + 20 * 60 * 1000);
 
-        // リアルタイムで+20分後までの時間帯を×にする
+        // リアルタイムで+20分後までの時間帯を✕にする
         if (slotStart < nowPlus20) {
             cell.textContent = '✕';
             cell.classList.add('unavailable');
             continue;
         }
+
 
         const isBusinessDay = businessDays.some(businessDay => {
             const businessDayStart = new Date(businessDay.start);
