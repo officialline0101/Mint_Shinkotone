@@ -1743,12 +1743,12 @@ for (let i = 0; i < 7; i++) {
                     // saturdayLikeDates は「土曜以外で臨時に土曜と同じ扱いにする日」のみを列挙する。
                     // 指定日は土曜日と同じ扱い（午後の枠も開放・16:20は3枠）
                     const slotDateStr = `${slotStart.getFullYear()}-${String(slotStart.getMonth() + 1).padStart(2, '0')}-${String(slotStart.getDate()).padStart(2, '0')}`;
-                    const saturdayLikeDates = ['2026-06-24', '2026-07-03', '2026-07-08', '2026-07-09', '2026-07-22', '2026-07-29', '2026-07-30', '2026-08-05', '2026-08-10', '2026-08-12', '2026-08-19', '2026-08-26'];
+                    const saturdayLikeDates = ['2026-06-24', '2026-07-03', '2026-07-08', '2026-07-09', '2026-07-22', '2026-07-29', '2026-07-30', '2026-08-05', '2026-08-10', '2026-08-12', '2026-08-19', '2026-08-26', '2026-09-24', '2026-09-25'];
                     const isSaturdayLike = slotStart.getDay() === 6 || saturdayLikeDates.includes(slotDateStr);
 
                     // 受付不可日：スタッフ2名体制の日のため、下記の時間帯を予約不可（✕）にする（16:20は対象外＝通常どおり開放）
                     // 追加・削除はこの2つの配列のみ編集すればよい
-                    const closedReceptionDates = ['2026-09-04'];
+                    const closedReceptionDates = [];
                     const closedReceptionTimes = ['09:40', '10:00', '11:00', '11:20', '12:20', '12:40', '13:40', '14:00', '15:00', '15:20'];
                     const isClosedReception = closedReceptionDates.includes(slotDateStr) && closedReceptionTimes.includes(times[j]);
 
