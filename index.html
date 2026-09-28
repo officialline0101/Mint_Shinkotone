@@ -1750,7 +1750,13 @@ for (let i = 0; i < 7; i++) {
                     // 追加・削除はこの2つの配列のみ編集すればよい
                     const closedReceptionDates = [];
                     const closedReceptionTimes = ['09:40', '10:00', '11:00', '11:20', '12:20', '12:40', '13:40', '14:00', '15:00', '15:20'];
-                    const isClosedReception = closedReceptionDates.includes(slotDateStr) && closedReceptionTimes.includes(times[j]);
+                    // 日付ごとに個別で閉じる（✕にする）時間帯
+                    // 例：2026-09-28 の 12:20 を✕
+                    const closedTimeOverrides = {
+                        '2026-09-28': ['12:20']
+                    };
+                    const isClosedByOverride = (closedTimeOverrides[slotDateStr] || []).includes(times[j]);
+                    const isClosedReception = isClosedByOverride || (closedReceptionDates.includes(slotDateStr) && closedReceptionTimes.includes(times[j]));
 
                     // 受付不可日は最優先で✕（予約の有無に関係なく閉じる）
                     if (isClosedReception) {
